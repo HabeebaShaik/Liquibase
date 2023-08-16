@@ -1,0 +1,106 @@
+<?xml version="1.1" encoding="UTF-8" standalone="no"?>
+<databaseChangeLog
+	xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+	xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.5.xsd">
+	<changeSet id="1" author="Habeeba">
+		<createTable tableName="customer">
+			<column name="C_Id" type="INT">
+				<constraints primaryKey="true" />
+			</column>
+			<column name="C_Name" type="VARCHAR(30)" />
+			<column name="C_Email" type="VARCHAR(40)" />
+			<column name="C_Phone" type="BIGINT" />
+		</createTable>
+	</changeSet>
+	<changeSet id="2" author="Habeeba (generated)">
+		<insert tableName="customer">
+			<column name="C_Id" value="2" />
+			<column name="C_Name" value="John Doe" />
+			<column name="C_Email" value="johndoe@example.com" />
+			<column name="C_Phone" value="1234567890" />
+		</insert>
+	</changeSet>
+	<changeSet id="3" author="Habeeba (generated)">
+		<insert tableName="customer">
+			<column name="C_Id" value="3" />
+			<column name="C_Name" value="Nick" />
+			<column name="C_Email" value="nick@gmail.com" />
+			<column name="C_Phone" value="7768557456" />
+		</insert>
+	</changeSet>
+			<changeSet id="insert" author="Habeeba">
+		<insert tableName="customer">
+			<column name="C_Id" value="6" />
+			<column name="C_Name" value="Arun" />
+			<column name="C_Email" value="arun@example.com" />
+			<column name="C_Phone" value="7789456789" />
+		</insert>
+	</changeSet>
+			<changeSet id="value" author="Habeeba">
+		<insert tableName="customer">
+			<column name="C_Id" value="7" />
+			<column name="C_Name" value="Amulya" />
+			<column name="C_Email" value="amulya@example.com" />
+			<column name="C_Phone" value="7988766789" />
+		</insert>
+	</changeSet>
+	<changeSet id="4" author="Habeeba">
+		<addColumn tableName="customer">
+			<column name="created_at" type="TIMESTAMP"
+				defaultValueComputed="CURRENT_TIMESTAMP" />
+			<column name="updated_at" type="TIMESTAMP" />
+		</addColumn>
+	</changeSet>
+	<changeSet id="addUpdatedAtTrigger" author="Habeeba">
+		<sql>
+			CREATE TRIGGER customer_updated_at_trigger
+			BEFORE UPDATE ON customer FOR EACH ROW
+			BEGIN
+			SET NEW.updated_at = NOW();
+			END;
+		</sql>
+	</changeSet>
+	<changeSet id="updateData" author="Habeeba">
+		<update tableName="customer">
+			<column name="C_Name">Nick Doe</column>
+			<column name="C_Email">nickdoe@gmail.com</column>
+			<where>C_Id = 3</where>
+		</update>
+	</changeSet>
+	<!-- <changeSet id="upload" author="Habeeba">
+    <loadData file="classpath:csv/Sample.csv" 
+   			 separator=";" 
+   			 tableName="customer">
+        <column name="C_Id" type="INT"/>
+        <column name="C_Name" type="VARCHAR(30)"/>
+        <column name="C_Email" type="VARCHAR(40)"/>
+        <column name="C_Phone" type="BIGINT"/>
+        <column name="created_at" type="TIMESTAMP"/>
+        <column name="updated_at" type="TIMESTAMP"/>
+    </loadData>
+</changeSet> -->
+<changeSet id="change" author="Habeeba">
+    <loadUpdateData file="classpath:csv/Sample.csv" primaryKey="C_Id"
+                    separator=";" tableName="customer">
+        <column name="C_Id" type="INT"/>
+        <column name="C_Name" type="VARCHAR(30)"/>
+        <column name="C_Email" type="VARCHAR(40)"/>
+        <column name="C_Phone" type="BIGINT"/>
+        <column name="created_at" type="TIMESTAMP"/>
+        <column name="updated_at" type="TIMESTAMP"/>
+    </loadUpdateData>
+</changeSet>
+<changeSet id="add" author="Habeeba">
+		<addColumn tableName="customer">
+			<column name="something" type="VARCHAR(30)"/>
+		</addColumn>
+	</changeSet>
+	<changeSet id="drop-column" author="Habeeba">
+    <dropColumn tableName="customer" columnName="something"/>
+</changeSet>
+<changeSet id="change-column-data-type" author="Habeeba">
+   <modifyDataType  tableName="customer" columnName="C_Name" newDataType="VARCHAR(40)"/>
+</changeSet>
+</databaseChangeLog>
